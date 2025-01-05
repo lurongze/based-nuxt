@@ -6,7 +6,7 @@ import sendSvg from "~/assets/send.svg";
 import avatar1Png from "~/assets/avatar/avatar1.png";
 import avatar2Png from "~/assets/avatar/avatar2.png";
 import cornerButton from "~/components/corner-button.vue";
-import { postChatMessage, getRandMessage } from "~/api";
+import { postChatMessage,getHistory, getRandMessage } from "~/api";
 import { isImageUrl } from "~/utils";
 import { DynamicScroller, DynamicScrollerItem } from "vue-virtual-scroller";
 import "vue-virtual-scroller/dist/vue-virtual-scroller.css";
@@ -32,42 +32,40 @@ onUnmounted(() => {
 });
 
 function hellMessage() {
-  if (filteredItems.value.length < 1) {
-    filteredItems.value.push({
-      id: getUuid(),
-      self: false,
-      message:
-        "Ay yo,fresh meat!Welcome to the block.\nStick with me and you might just make it in herer.What's on your mind?",
-    });
-    // filteredItems.value.push({
-    //   id: getUuid(),
-    //   self: false,
-    //   isImg: true,
-    //   message:
-    //     "https://demoproject-gamma.vercel.app/assets/main-bg-BFKHN1gS.png",
-    // });
-  }
+  // if (filteredItems.value.length < 1) {
+  //   filteredItems.value.push({
+  //     id: getUuid(),
+  //     self: false,
+  //     message:
+  //       "Ay yo,fresh meat!Welcome to the block.\nStick with me and you might just make it in herer.What's on your mind?",
+  //   });
+  // }
+  getHistory().then((res)=>{
+    console.log("res",res)
+    const list = (res?.data?.messages||[]).map(s=>{
+      const item = {
+        id: s.id ? s.id : getUuid(),
+        message: s.content,
+        name: s.id ? s.id.slice(0,6) : s.role
+      }
+      return item;
+      // filteredItems.value.push(item)
+    })
+    // console.log("list", list)
+    filteredItems.value = list;
+    scrollToBottom();
+  })
 }
 
-function fakerAddMessage() {
-  clearInterval(interval.value);
-  interval.value = setInterval(() => {
-    filteredItems.value.push(generateMessage());
-    scroller.value && scroller.value.scrollToBottom();
-  }, 5000);
+function scrollToBottom(){
+  nextTick(()=>{
+    scroller.value&&scroller.value.scrollToBottom();
+  })
 }
 
-function handleSend__() {
-  if (!inputVal.value) return;
-  filteredItems.value.push({
-    ...loginStore.loginUser,
-    id: getUuid(),
-    self: true,
-    message: inputVal.value,
-  });
-  scroller.value.scrollToBottom();
-  inputVal.value = "";
-}
+
+
+
 const sending = ref(false);
 function handleSend() {
   if (!inputVal.value) return;
@@ -78,7 +76,7 @@ function handleSend() {
     self: true,
     message: inputVal.value,
   });
-  scroller.value.scrollToBottom();
+  scrollToBottom()
   const message = inputVal.value;
   inputVal.value = "";
   // getRandMessage
@@ -95,7 +93,7 @@ function handleSend() {
         message: "Jeet jail is closed to you. Please try later.",
         error: true,
       });
-      scroller.value.scrollToBottom();
+      scrollToBottom()
     })
     .then((res) => {
       console.log("then", res);
@@ -114,7 +112,7 @@ function handleSend() {
           isImg: isImg,
           message: messageStr,
         });
-        scroller.value.scrollToBottom();
+        scrollToBottom()
       }
     })
     .finally(() => {
@@ -136,7 +134,7 @@ function handleOpenChat() {
   if (isLogin.value) {
     isClose.value = false;
     nextTick(() => {
-      scroller.value.scrollToBottom();
+      scrollToBottom()
     });
   } else {
     handleConnect();

@@ -7,6 +7,10 @@ export function postChatMessage(params) {
   return http.post(`${preLink}/conversation/new-chat-message`, params);
 }
 
+export function getHistory() {
+  return http.get(`${preLink}/conversation/history`);
+}
+
 export function getRandMessage() {
   return http.get(`${preLink}/conversation/random-message`);
 }

@@ -86,9 +86,8 @@ onMounted(() => {
           BAZZAR
         </NuxtLink>
       </corner-button>
-      <corner-button>
+      <corner-button v-if="loginStore.loginUser.accountKey">
         <NuxtLink
-          v-if="loginStore.loginUser.accountKey"
           :href="`https://dexscreener.com/blast/${loginStore.loginUser.accountKey}`"
           target="_blank"
           class="text-white mx-5 h-[44px] leading-[44px] block"
