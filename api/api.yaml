@@ -1,0 +1,102 @@
+openapi: 3.1.0
+info:
+  title: Conversation API
+  description: API for managing chat messages, mentions, and retrieving random messages.
+  version: 1.0.0
+paths:
+  /conversation/newchatmessage:
+    post:
+      summary: Submit a new chat message.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: Username sending the chat message.
+                message:
+                  type: string
+                  description: Content of the chat message.
+              required:
+                - username
+                - message
+      responses:
+        "200":
+          description: Chat message processed successfully.
+        "400":
+          description: Invalid input parameters.
+  /conversation/newmention:
+    post:
+      summary: Handle a new mention and determine response.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: Username that mentioned.
+                mentionContent:
+                  type: string
+                  description: Content of the mention.
+              required:
+                - username
+                - mentionContent
+      responses:
+        "200":
+          description: Mention processed successfully.
+        "400":
+          description: Invalid input parameters.
+  /conversation/randommessage:
+    get:
+      summary: Retrieve a random message.
+      responses:
+        "200":
+          description: Random message retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Randomly selected message.
+        "500":
+          description: Server error retrieving random message.
+components:
+  schemas:
+    ChatMessage:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username sending the chat message.
+        message:
+          type: string
+          description: Content of the chat message.
+      required:
+        - username
+        - message
+    Mention:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username that mentioned.
+        mentionContent:
+          type: string
+          description: Content of the mention.
+      required:
+        - username
+        - mentionContent
+    RandomMessage:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Randomly selected message.

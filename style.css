@@ -1,0 +1,118 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* .main-body {
+  background-image: url("/public/main-bg.png");
+  background-size: cover;
+  background-position: center top 100px;
+  background-repeat: no-repeat;
+}
+.main-body.shop-close {
+  background-image: url("/public/shop-close.png");
+} */
+.main-head-nav {
+  background-image: url("/public/top-bg-mask.png"), url("/public/top-bg.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.scroll-root::-webkit-scrollbar {
+  width: 8px;
+}
+.scroll-root::-webkit-scrollbar-track {
+  background: #1a1b26;
+}
+.scroll-root::-webkit-scrollbar-thumb {
+  background: #414868;
+  border-radius: 4px;
+}
+.scroll-root::-webkit-scrollbar-thumb:hover {
+  background: #565f89;
+}
+
+.bounce-enter-active {
+  animation: bounce-in 0.1s;
+}
+.bounce-leave-active {
+  animation: bounce-in 0.1s reverse;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.slid-enter-active {
+  animation: slid-in 0.5s reverse;
+}
+.slid-leave-active {
+  animation: slid-in 0.5s;
+}
+@keyframes slid-in {
+  0% {
+    height: 70vh;
+  }
+
+  100% {
+    height: 0;
+  }
+}
+
+.fade-enter-active {
+  animation: fade-in 0.5s reverse;
+}
+.fade-leave-active {
+  animation: fade-in 0.5s;
+}
+@keyframes fade-in {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.modal-enter-active {
+  animation: modal-in 0.3s;
+}
+.modal-leave-active {
+  animation: modal-in 0.3s reverse;
+}
+@keyframes modal-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/* .chat-bg-linear {
+  background: linear-gradient(180deg, #237bff 0%, #c623ff 100%);
+} */
+
+.self-animate-running {
+  animation: running-text 6s linear infinite;
+}
+
+@keyframes running-text {
+  0% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(-60px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
