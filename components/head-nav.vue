@@ -13,7 +13,7 @@ import { fetchEth, fetchPools } from "~/api";
 
 const loginStore = useLoginStore();
 
-const emit = defineEmits(["open-user-modal"]);
+const emit = defineEmits(["open-user-modal", "clickAction"]);
 
 function handleOpenUserModal() {
   emit("open-user-modal");
@@ -42,6 +42,10 @@ function handleShare() {
     `https://etherscan.io/address/${loginStore.loginUser.accountKey}`
   );
 }
+
+function handleAction(action = "shop-keeper") {
+  emit("clickAction", action);
+}
 onMounted(() => {
   getEthPrice();
   getPoolsData();
@@ -52,7 +56,7 @@ onMounted(() => {
   <div
     class="main-head-nav absolute left-0 top-0 w-[100vw] h-[100px] flex flex-wrap overflow-hidden justify-between"
   >
-    <div class="flex h-full items-center">
+    <div class="hidden sm:flex h-full items-center">
       <div
         class="w-[100px] h-full flex justify-center items-center border-r-[1px] border-r-[#ccc]"
       >
@@ -71,20 +75,20 @@ onMounted(() => {
     </div>
     <div class="text-lg flex h-full items-center gap-4 box-border">
       <corner-button>
-        <NuxtLink
-          href="/info"
+        <div
+          @click="handleAction('info-page')"
           class="text-white mx-5 h-[44px] leading-[44px] block"
         >
           INFO
-        </NuxtLink>
+        </div>
       </corner-button>
       <corner-button>
-        <NuxtLink
-          href="/bazzar"
+        <div
+          @click="handleAction('shop-keeper')"
           class="text-white mx-5 h-[44px] leading-[44px] block"
         >
-          BAZZAR
-        </NuxtLink>
+          The Shopkeeper
+        </div>
       </corner-button>
       <corner-button v-if="loginStore.loginUser.accountKey">
         <NuxtLink

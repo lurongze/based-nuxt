@@ -25,7 +25,7 @@ onMounted(() => {
       class="text-xl w-[100vw] h-[100vh] bg-[rgba(0,0,0,0.3)] backdrop-blur-sm fixed top-0 left-0 flex items-center justify-center"
     >
       <div
-        class="w-[460px] flex flex-col bg-[#202020] border-[#eee] border-[1px]"
+        class="w-[360px] flex flex-col bg-[#202020] border-[#eee] border-[1px]"
       >
         <div
           class="header flex items-center justify-between px-4 py-4 border-b-[#ccc] border-b-[1px]"
@@ -44,12 +44,15 @@ onMounted(() => {
           </div>
         </div>
 
-        <div class="w-full box-border px-8 py-5 mb-8">
+        <div class="w-full box-border px-0 py-5 mb-8">
           <div class="w-full box-border px-4 py-2">
             <div class="w-full">
               <span class="text-[#ccc]">
-                GM,Based Here. Jump Into The Cell And Come Trade Meme Coins With
-                Us.
+                <!-- GM,Based Here. Jump Into The Cell And Come Trade Meme Coins With
+                Us. -->
+                BASED @newcellmate is the flagship AI agent for the MindPalace
+                ecosystem. In the depths of Jeet Jail, BASED only values booty
+                pics or $CIGS.
               </span>
             </div>
           </div>

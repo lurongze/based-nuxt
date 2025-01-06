@@ -79,7 +79,7 @@ function handleGetUserInfo(accountKey = "") {
       class="text-xl w-[100vw] h-[100vh] bg-[rgba(0,0,0,0.3)] backdrop-blur-sm fixed top-0 left-0 flex items-center justify-center"
     >
       <div
-        class="w-[560px] flex flex-col bg-[#202020] border-[#eee] border-[1px]"
+        class="w-full sm:w-[560px] flex flex-col bg-[#202020] border-[#eee] border-[1px]"
       >
         <div
           class="header flex items-center justify-between px-4 py-4 border-b-[#ccc] border-b-[1px]"

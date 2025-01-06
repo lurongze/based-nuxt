@@ -26,6 +26,9 @@ const selectedAvatar = ref(1);
 const emit = defineEmits(["close", "create", "connect", "disconnect"]);
 
 function handleClose() {
+  if (!inputUsername.value) {
+    return;
+  }
   emit("close");
 }
 function handleSelectAvatar(index) {
@@ -51,7 +54,7 @@ function handleUpdateProfile() {
 function handleGetValue() {
   return {
     name: inputUsername.value,
-    avatar: "",
+    avatar: selectedAvatar.value,
   };
 }
 
@@ -85,8 +88,11 @@ const MMSDK = new MetaMaskSDK({
 });
 
 async function handleDisConnect() {
-  await MMSDK.disconnect();
-  emit("disconnect");
+  if (window.confirm("Are you sure to disconnect?")) {
+    console.log("disconnect");
+    await MMSDK.terminate();
+    emit("disconnect");
+  }
 }
 
 function handleShare() {
@@ -99,9 +105,8 @@ watch(
   () => props.show,
   (e) => {
     if (e) {
-      inputUsername.value =
-        loginStore.loginUser.name ||
-        (loginStore.loginUser.accountKey || "").slice(0, 5);
+      inputUsername.value = loginStore.loginUser.name || "";
+      selectedAvatar.value = +loginStore.loginUser.avatar;
     }
   }
 );
@@ -114,7 +119,7 @@ watch(
       class="text-xl w-[100vw] h-[100vh] bg-[rgba(0,0,0,0.3)] backdrop-blur-sm fixed top-0 left-0 flex items-center justify-center"
     >
       <div
-        class="w-[560px] flex flex-col bg-[#202020] border-[#eee] border-[1px]"
+        class="w-full sm:w-[560px] flex flex-col bg-[#202020] border-[#eee] border-[1px]"
       >
         <div
           class="header flex items-center justify-between px-4 py-4 border-b-[#ccc] border-b-[1px]"
@@ -125,6 +130,7 @@ watch(
 
           <div
             class="w-8 h-8 flex items-center justify-center border-[1px] border-[#ccc]"
+            :class="inputUsername.length > 0 ? '' : 'cursor-not-allowed'"
             @click="handleClose"
           >
             <img
@@ -198,7 +204,9 @@ watch(
         <div class="w-full box-border px-8 py-5 mb-8">
           <div class="w-full bg-[#292929] gap-1 box-border px-4 py-2">
             <div class="w-full">
-              <span class="text-[#ccc]">Username</span>
+              <span class="text-[#ccc]"
+                >Username({{ inputUsername.length }}/10)</span
+              >
             </div>
             <div
               class="h-[56px] bg-[#292929] flex items-center px-2 mt-2 gap-2 border-[1px] border-[#ccc]"
@@ -206,6 +214,7 @@ watch(
               <input
                 class="h-full flex-1 bg-[#292929] border-none outline-none text-lg text-white placeholder:text-[#838383]"
                 v-model="inputUsername"
+                :maxlength="10"
                 placeholder="@Username"
               />
             </div>

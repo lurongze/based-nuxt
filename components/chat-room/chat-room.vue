@@ -6,7 +6,8 @@ import sendSvg from "~/assets/send.svg";
 import avatar1Png from "~/assets/avatar/avatar1.png";
 import avatar2Png from "~/assets/avatar/avatar2.png";
 import cornerButton from "~/components/corner-button.vue";
-import { postChatMessage,getHistory, getRandMessage } from "~/api";
+import chatItem from "./chat-item.vue";
+import { postChatMessage,getHistory } from "~/api";
 import { isImageUrl } from "~/utils";
 import { DynamicScroller, DynamicScrollerItem } from "vue-virtual-scroller";
 import "vue-virtual-scroller/dist/vue-virtual-scroller.css";
@@ -22,97 +23,73 @@ const filteredItems = ref([]);
 const interval = ref(null);
 const inputVal = ref("");
 const isClose = ref(false);
+const isComposition = ref(false);
 onMounted(() => {
-  // fakerAddMessage();
-  hellMessage();
+  getHistoryInterval();
 });
 
 onUnmounted(() => {
   clearInterval(interval.value);
 });
 
-function hellMessage() {
-  // if (filteredItems.value.length < 1) {
-  //   filteredItems.value.push({
-  //     id: getUuid(),
-  //     self: false,
-  //     message:
-  //       "Ay yo,fresh meat!Welcome to the block.\nStick with me and you might just make it in herer.What's on your mind?",
-  //   });
-  // }
-  getHistory().then((res)=>{
-    console.log("res",res)
+const interTime = 1000 * 50;
+function getHistoryInterval(){
+  clearInterval(interval.value);
+  getHistory().catch(()=>{
+    interval.value = setInterval(()=>{
+      getHistoryInterval()
+    },interTime)
+  }).then((res)=>{
     const list = (res?.data?.messages||[]).map(s=>{
       const item = {
-        id:   getUuid(),
+        ...s,
+        id: `${s.id}-${s.role}`,
         message: s.content,
-        name: s.id ? s.id.slice(0,6) : s.role
+        name: s.user_name|| s.role,
       }
       return item;
-      // filteredItems.value.push(item)
     })
-    // console.log("list", list)
     filteredItems.value = list;
     scrollToBottom();
+    interval.value = setInterval(()=>{
+      getHistoryInterval()
+    },interTime)
   })
 }
 
 function scrollToBottom(){
-  nextTick(()=>{
+  setTimeout(()=>{
     scroller.value&&scroller.value.scrollToBottom();
-  })
+  },16)
 }
-
-
-
 
 const sending = ref(false);
 function handleSend() {
-  if (!inputVal.value) return;
+  if (!inputVal.value || isComposition.value) return;
   sending.value = true;
-  filteredItems.value.push({
+  const user_name_str = JSON.stringify({n:loginStore.loginUser.name,a:loginStore.loginUser.avatar});
+  const sendObj = {
     ...loginStore.loginUser,
     id: getUuid(),
-    self: true,
+    user_id: loginStore.loginUser.accountKey,
     message: inputVal.value,
-  });
+    name: user_name_str
+  }
+  filteredItems.value.push(sendObj);
   scrollToBottom()
   const message = inputVal.value;
   inputVal.value = "";
-  // getRandMessage
-  // postChatMessage
   postChatMessage({
     user_id: loginStore.loginUser.accountKey,
     query: message,
+    user_name: user_name_str
   })
-    .catch((res) => {
-      console.error("error", res);
-      filteredItems.value.push({
-        id: getUuid(),
-        self: false,
-        message: "Jeet jail is closed to you. Please try later.",
-        error: true,
-      });
-      scrollToBottom()
+    .catch(() => {
     })
     .then((res) => {
-      console.log("then", res);
       if (res?.data?.message) {
-        const isImg = isImageUrl(res.data.message);
-        let messageStr = res.data.message;
-        // if (isImg) {
-        //   messageStr = messageStr.replace(
-        //     "http://34.126.65.173:54268",
-        //     "https://nodeproxy-peach.vercel.app"
-        //   );
-        // }
-        filteredItems.value.push({
-          id: getUuid(),
-          self: false,
-          isImg: isImg,
-          message: messageStr,
-        });
-        scrollToBottom()
+        // 聊天机器人回复了
+        getHistoryInterval();
       }
     })
     .finally(() => {
@@ -194,45 +171,10 @@ function handleClose() {
             class="message"
             @click="changeMessage(item)"
           >
-            <div
-              class="flex items-top gap-4 box-border px-5 py-2"
-              :class="item.self ? 'flex-row-reverse' : ''"
-            >
-              <div class="avatar w-10 h-10 rounded-full overflow-hidden">
-                <img
-                  :key="item.id"
-                  :src="item.self ? avatar1Png : avatar2Png"
-                  alt="avatar"
-                  class="image w-full h-full object-cover"
-                />
-              </div>
-              <div
-                class="text flex-1 flex flex-col gap-1"
-                :class="item.self ? 'items-end' : ''"
-              >
-                <div
-                  class="text-lg text-[#ccc]"
-                  :class="item.self ? 'text-right' : ''"
-                >
-                  {{ item.name }}
-                </div>
-                <corner-button>
-                  <div
-                    v-if="item.isImg"
-                    class="w-full h-auto box-border px-5 py-2"
-                  >
-                    <img :src="item.message" class="w-full h-auto" />
-                  </div>
-                  <div
-                    v-else
-                    class="w-fit max-w-[385px] box-border px-5 py-2 text-lg text-white text-wrap break-words word-break-all"
-                    :class="item.error ? 'text-red-700' : ''"
-                  >
-                    {{ item.message }}
-                  </div>
-                </corner-button>
-              </div>
-            </div>
+            <chat-item
+              :item="item"
+              :account-key="loginStore.loginUser.accountKey"
+            />
           </DynamicScrollerItem>
         </template>
       </DynamicScroller>
@@ -256,6 +198,8 @@ function handleClose() {
               v-model="inputVal"
               @input="inputVal = $event.target.value.slice(0, inputMax)"
               @keydown.enter="handleSend"
+              @compositionstart="isComposition = true"
+              @compositionend="isComposition = false"
             />
             <img
               @click="handleSend"
@@ -283,14 +227,9 @@ function handleClose() {
     <div
       v-if="isClose"
       @click="handleOpenChat"
-      class="flex gap-2 justify-center items-center w-[500px] border-[#eee] border-2 h-[80px] leading-[80px] text-white text-2xl box-border text-center fixed bottom-5 right-5 bg-[#6be68a] cursor-pointer"
+      class="w-full sm:w-[500px] sm:right-5 flex gap-2 justify-center items-center border-[#eee] border-2 h-[80px] leading-[80px] text-white text-2xl box-border text-center fixed bottom-5 bg-[#6be68a] cursor-pointer"
     >
       {{ isLogin ? "Open Chat" : "Connect Wallet To Chat" }}
-      <!-- <div
-        class="rounded-full w-8 h-8 text-white bg-pink-600 text-lg text-center leading-8"
-      >
-        3
-      </div> -->
     </div>
   </Transition>
 </template>

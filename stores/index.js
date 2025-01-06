@@ -8,22 +8,30 @@ export const useLoginStore = defineStore(
     const loginUser = ref({
       name: "",
       accountKey: "",
+      avatar: 1,
     });
 
     function setLoginUser(userInfo = {}) {
+      console.log("setLoginUser");
       loginUser.value = {
         ...loginUser.value,
         ...userInfo,
       };
+      console.log("loginUser.value", loginUser.value);
+    }
+
+    function logout() {
+      loginUser.value = {};
     }
 
     return {
       loginUser,
       setLoginUser,
+      logout,
     };
+  },
+  {
+    persist: true,
+    storage: piniaPluginPersistedstate.localStorage(),
   }
-  // {
-  //   persist: true,
-  //   storage: piniaPluginPersistedstate.localStorage(),
-  // }
 );
