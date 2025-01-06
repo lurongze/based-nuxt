@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from "vue";
+import closeSvg from "~/assets/close.svg";
 
 const show = ref(true);
 
@@ -23,22 +24,43 @@ onMounted(() => {
       v-if="show"
       class="text-xl w-[100vw] h-[100vh] bg-[rgba(0,0,0,0.3)] backdrop-blur-sm fixed top-0 left-0 flex items-center justify-center"
     >
-      <div class="w-[560px] flex flex-col bg-blue-900/50">
-        <img
-          class="w-full h-full object-contain object-top"
-          src="https://www.lofidaze.com/images/dazeselfietransparent.png"
-        />
-        <h1 class="text-blue-200/80 text-center text-2xl mt-20 mb-8 px-8">
-          GM, Based here. <br />Jump into the cell and come trade meme coins
-          with us.
-        </h1>
-        <button
-          @click="handleClose"
-          class="w-auto max-w-xs sm:max-w-xl px-6 py-4 bg-blue-300 text-blue-800 hover:bg-[#9A8E75] hover:text-black transition-all duration-300 rounded-lg text-xl mx-10 mb-10"
+      <div
+        class="w-[460px] flex flex-col bg-[#202020] border-[#eee] border-[1px]"
+      >
+        <div
+          class="header flex items-center justify-between px-4 py-4 border-b-[#ccc] border-b-[1px]"
         >
-          <span class="hidden sm:inline">SPACE</span
-          ><span class="sm:hidden">TAP</span>
-        </button>
+          <div class="text-white"></div>
+
+          <div
+            class="w-8 h-8 flex items-center justify-center border-[1px] border-[#ccc]"
+            @click="handleClose"
+          >
+            <img
+              :src="closeSvg"
+              alt="close"
+              class="w-5 h-5 cursor-pointer text-white"
+            />
+          </div>
+        </div>
+
+        <div class="w-full box-border px-8 py-5 mb-8">
+          <div class="w-full box-border px-4 py-2">
+            <div class="w-full">
+              <span class="text-[#ccc]">
+                GM,Based Here. Jump Into The Cell And Come Trade Meme Coins With
+                Us.
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="bg-[#eee] px-4 py-4 text-center text-black text-2xl cursor-pointer"
+          @click="handleClose"
+        >
+          LFG!
+        </div>
       </div>
     </div>
   </Transition>

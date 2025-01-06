@@ -44,7 +44,7 @@ function hellMessage() {
     console.log("res",res)
     const list = (res?.data?.messages||[]).map(s=>{
       const item = {
-        id: s.id ? s.id : getUuid(),
+        id:   getUuid(),
         message: s.content,
         name: s.id ? s.id.slice(0,6) : s.role
       }
@@ -151,7 +151,7 @@ function handleClose() {
   <Transition name="slid">
     <div
       v-if="!isClose"
-      class="w-[500px] h-[70vh] bg-[#202020] border-[#eee] border-2 self-end shadow-2xl flex flex-col overflow-hidden fixed bottom-5 right-5"
+      class="w-full sm:w-[500px] sm:right-5 h-[70vh] bg-[#202020] border-[#eee] border-2 self-end shadow-2xl flex flex-col overflow-hidden fixed bottom-5"
     >
       <div
         class="header flex items-center justify-between px-4 py-4 border-b-[#ccc] border-b-[1px]"

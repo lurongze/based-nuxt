@@ -15,8 +15,6 @@ const loginStore = useLoginStore();
 const showLoginModal = ref(false);
 const showUserInfoModal = ref(false);
 
-const isShopClose = ref(false);
-
 function handleLogin() {
   showLoginModal.value = false;
   if (!loginStore.loginUser.name) {
@@ -41,11 +39,8 @@ function handleDisconnect() {
 </script>
 
 <template>
-  <div
-    class="main-body relative w-[100vw] h-[100vh] overflow-hidden"
-    :class="isShopClose ? 'shop-close' : ''"
-  >
-    <main-bg-video />
+  <div class="main-body relative w-[100vw] h-[100vh] overflow-hidden">
+    <!-- <main-bg-video /> -->
 
     <head-nav @open-user-modal="handleOpenUserModal" />
     <chat-room @connect="showLoginModal = true" />

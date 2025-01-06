@@ -74,7 +74,7 @@ onUnmounted(() => {
 
 <template>
   <div
-    class="w-52 h-12 rounded-3xl border-[1px] border-gray-400 bg-[#151517] flex items-center justify-between box-border px-2"
+    class="w-12 sm:w-52 h-12 rounded-3xl border-[1px] border-gray-400 bg-[#151517] flex items-center justify-between box-border px-2"
   >
     <div
       v-if="isCanplay"
@@ -86,7 +86,7 @@ onUnmounted(() => {
     <div v-else class="h-8 w-8 flex items-center justify-center cursor-pointer">
       <loading-icon color="#27e67b" show />
     </div>
-    <div class="flex gap-2 items-center flex-1 px-1 overflow-hidden">
+    <div class="hidden sm:flex gap-2 items-center flex-1 px-1 overflow-hidden">
       <div
         class="text-[#27e67b] text-nowrap whitespace-nowrap self-animate-running"
       >
