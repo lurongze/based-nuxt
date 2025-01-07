@@ -18,3 +18,8 @@ https://dexscreener.com/blast/0xD4196Fe40eB76bE197E1F3cCc8a118f32C56f66c
 
 币对应的美元价格接口可以，但是涨跌的接口不行
 群聊接口具体应该怎么对接
+
+TODO：
+
+1. info page
+2. how to get the increase or decrease data

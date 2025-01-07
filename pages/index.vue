@@ -9,6 +9,7 @@ import userModal from "~/components/user-modal.vue";
 import mainBgVideo from "~/components/main-bg-video.vue";
 import shopKeeper from "~/components/shop-keeper.vue";
 import infoPage from "~/components/info-page.vue";
+import mainBgImg from "~/components/main-bg-img.vue";
 
 import { useLoginStore } from "~/stores";
 
@@ -75,7 +76,8 @@ function handleClose(action) {
 
 <template>
   <div class="main-body relative w-[100vw] h-[100vh] overflow-hidden">
-    <main-bg-video />
+    <!-- <main-bg-video /> -->
+    <main-bg-img />
     <head-nav
       @open-user-modal="handleOpenUserModal"
       @click-action="handleClickAction"

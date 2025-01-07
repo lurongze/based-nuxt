@@ -13,6 +13,7 @@ const isCanplay = ref(false);
 const audioRef = ref(null);
 const isPlaying = ref(false);
 const isMuted = ref(false);
+const hasFirstPlay = ref(false);
 
 function handleAutio() {
   if (!isCanplay.value) {
@@ -39,6 +40,7 @@ function handleVoice() {
 
 // 监听音频播放事件
 const handlePlay = () => {
+  hasFirstPlay.value = true;
   isPlaying.value = true;
 };
 
@@ -60,6 +62,12 @@ onMounted(() => {
       });
     });
   }
+  document.addEventListener("click", () => {
+    if (hasFirstPlay.value) {
+      return;
+    }
+    audioRef.value?.play();
+  });
 });
 
 // 在组件卸载时移除事件监听器
@@ -78,7 +86,7 @@ onUnmounted(() => {
   >
     <div
       v-if="isCanplay"
-      @click="handleAutio"
+      @click.stop="handleAutio"
       class="h-8 w-8 rounded-full bg-[#27e67b] flex items-center justify-center cursor-pointer"
     >
       <img :src="isPlaying ? pauseSvg : playSvg" class="w-4 h-4" />

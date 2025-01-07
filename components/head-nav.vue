@@ -58,7 +58,8 @@ onMounted(() => {
   >
     <div class="hidden sm:flex h-full items-center">
       <div
-        class="w-[100px] h-full flex justify-center items-center border-r-[1px] border-r-[#ccc]"
+        class="w-[100px] h-full flex justify-center items-center border-r-[1px] border-r-[#ccc] cursor-pointer"
+        @click="handleAction('home-page')"
       >
         <img :src="logoSvg" alt="logo" class="w-[40px] h-[40px]" />
       </div>
@@ -66,7 +67,8 @@ onMounted(() => {
         <img
           :src="titlePng"
           alt="mindpalace new cellmate"
-          class="h-[160px] w-fit object-contain -mt-[5px] -ml-[50px]"
+          class="h-[160px] w-fit object-contain -mt-[5px] -ml-[50px] cursor-pointer"
+          @click="handleAction('home-page')"
         />
         <div class="absolute top-[28px] -right-24">
           <audio-player />
@@ -92,7 +94,8 @@ onMounted(() => {
       </corner-button>
       <corner-button v-if="loginStore.loginUser.accountKey">
         <NuxtLink
-          :href="`https://dexscreener.com/blast/${loginStore.loginUser.accountKey}`"
+          __href="`https://dexscreener.com/blast/${loginStore.loginUser.accountKey}`"
+          href="https://dexscreener.com/blast/0xD4196Fe40eB76bE197E1F3cCc8a118f32C56f66c"
           target="_blank"
           class="text-white mx-5 h-[44px] leading-[44px] block"
         >
@@ -110,13 +113,25 @@ onMounted(() => {
             $AI
           </div> -->
           <div class="flex items-center whitespace-nowrap h-full mx-5 gap-1">
-            <div class="text-lg text-[#ccc]">${{ ethPrice }}</div>
-            <img
-              :src="poolsNum >= 0 ? upCaseSvg : downCaseSvg"
-              alt="up-corner"
-              class="w-[24px] h-[24px]"
-            />
-            <div class="text-[#01E527]">{{ poolsNum }}%</div>
+            <NuxtLink
+              href="https://dexscreener.com/blast/0xD4196Fe40eB76bE197E1F3cCc8a118f32C56f66c"
+              target="_blank"
+              class="text-lg text-[#ccc] cursor-pointer"
+            >
+              ${{ ethPrice }}
+            </NuxtLink>
+            <NuxtLink
+              href="https://app.baseline.markets/trade/Blast/0x367473E150487e5cDC14D331550ed909b7B2192D"
+              target="_blank"
+              class="flex gap-1"
+            >
+              <img
+                :src="poolsNum >= 0 ? upCaseSvg : downCaseSvg"
+                alt="up-corner"
+                class="w-[24px] h-[24px]"
+              />
+              <div class="text-[#01E527] cursor-pointer">{{ poolsNum }}%</div>
+            </NuxtLink>
           </div>
         </div>
       </corner-button>

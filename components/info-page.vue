@@ -21,13 +21,13 @@ function handleClose(action = "info-page") {
   <Transition name="fade">
     <div
       v-if="props.show"
-      class="fixed w-[100vw] h-[calc(100vh-100px)] bg-white top-[100px] left-0 z-50"
+      class="fixed w-[100vw] h-[calc(100vh-100px)] bg-black top-[100px] left-0 z-50"
     >
-      <img src="/public/shop-keeper.png" class="w-full h-full object-cover" />
+      <img src="/public/shop-keeper.png" class="w-full h-full object-contain" />
       <div
         class="w-full sm:w-[560px] right-0 flex flex-col bg-[#202020] border-[#eee] border-[1px] fixed sm:right-5 top-[200px] z-50"
       >
-        <div class="header flex items-center justify-between px-4 py-4">
+        <!-- <div class="header flex items-center justify-between px-4 py-4">
           <div class="text-white"></div>
           <div
             class="w-8 h-8 flex items-center justify-center border-[1px] border-[#ccc]"
@@ -39,7 +39,7 @@ function handleClose(action = "info-page") {
               class="w-5 h-5 cursor-pointer text-white"
             />
           </div>
-        </div>
+        </div> -->
         <div
           class="w-full max-h-[60vh] overflow-y-auto text-xl box-border px-0 py-2 mb-2 scroll-root"
         >
