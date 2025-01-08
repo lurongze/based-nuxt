@@ -25,7 +25,7 @@ function handleClose(action = "info-page") {
     >
       <img src="/public/shop-keeper.png" class="w-full h-full object-contain" />
       <div
-        class="w-full sm:w-[560px] right-0 flex flex-col bg-[#202020] border-[#eee] border-[1px] fixed sm:right-5 top-[200px] z-50"
+        class="w-full sm:w-[560px] right-0 flex flex-col bg-[#202020] border-[#eee] border-[1px] fixed sm:right-5 top-1/2 -translate-y-1/2 z-50"
       >
         <!-- <div class="header flex items-center justify-between px-4 py-4">
           <div class="text-white"></div>
@@ -41,7 +41,7 @@ function handleClose(action = "info-page") {
           </div>
         </div> -->
         <div
-          class="w-full max-h-[60vh] overflow-y-auto text-xl box-border px-0 py-2 mb-2 scroll-root"
+          class="w-full max-h-[60vh] overflow-y-auto text-base box-border px-0 py-2 mb-2 scroll-root self-font-sans"
         >
           <div class="w-full box-border px-4 py-2">
             <div

@@ -43,9 +43,8 @@ function getHistoryInterval(){
     const list = (res?.data?.messages||[]).map(s=>{
       const item = {
         ...s,
-        id: `${s.id}-${s.role}`,
+        id: `${s.message_id}-${s.role}`,
         message: s.content,
-        name: s.user_name|| s.role,
       }
       return item;
     })
@@ -67,22 +66,27 @@ const sending = ref(false);
 function handleSend() {
   if (!inputVal.value || isComposition.value) return;
   sending.value = true;
-  const user_name_str = JSON.stringify({n:loginStore.loginUser.name,a:loginStore.loginUser.avatar});
+  const user_id_str = JSON.stringify(
+    {
+      n:loginStore.loginUser.name, // 姓名
+      a:loginStore.loginUser.avatar, // 头像
+      k: loginStore.loginUser.accountKey // user_id ，metamask的accountkey
+    }
+  );
   const sendObj = {
     ...loginStore.loginUser,
     id: getUuid(),
-    user_id: loginStore.loginUser.accountKey,
+    user_id: user_id_str,
     message: inputVal.value,
-    name: user_name_str
   }
   filteredItems.value.push(sendObj);
   scrollToBottom()
   const message = inputVal.value;
   inputVal.value = "";
   postChatMessage({
-    user_id: loginStore.loginUser.accountKey,
+    user_id: user_id_str,
     query: message,
-    user_name: user_name_str
+
   })
     .catch(() => {
     })

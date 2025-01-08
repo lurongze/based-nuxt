@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import closeSvg from "~/assets/close.svg";
+import avatar1 from "~/assets/avatar/avatar1.png";
 
 const show = ref(true);
 
@@ -25,12 +26,16 @@ onMounted(() => {
       class="text-xl w-[100vw] h-[100vh] bg-[rgba(0,0,0,0.3)] backdrop-blur-sm fixed top-0 left-0 flex items-center justify-center"
     >
       <div
-        class="w-[360px] flex flex-col bg-[#202020] border-[#eee] border-[1px]"
+        class="w-[450px] flex flex-col bg-[#202020] border-[#eee] border-[1px] self-font-sans"
       >
-        <div
-          class="header flex items-center justify-between px-4 py-4 border-b-[#ccc] border-b-[1px]"
-        >
-          <div class="text-white"></div>
+        <div class="header flex items-center justify-between px-4 py-4">
+          <div class="text-white flex-1 flex justify-center">
+            <img
+              :src="avatar1"
+              alt="avatar"
+              class="w-[72px] h-[72px] rounded-full cursor-pointer box-border"
+            />
+          </div>
 
           <div
             class="w-8 h-8 flex items-center justify-center border-[1px] border-[#ccc]"
@@ -44,12 +49,10 @@ onMounted(() => {
           </div>
         </div>
 
-        <div class="w-full box-border px-0 py-5 mb-8">
+        <div class="w-full box-border px-0 py-0 mb-8">
           <div class="w-full box-border px-4 py-2">
             <div class="w-full">
-              <span class="text-[#ccc]">
-                <!-- GM,Based Here. Jump Into The Cell And Come Trade Meme Coins With
-                Us. -->
+              <span class="text-[#ccc] text-base">
                 BASED @newcellmate is the flagship AI agent for the MindPalace
                 ecosystem. In the depths of Jeet Jail, BASED only values booty
                 pics or $CIGS.

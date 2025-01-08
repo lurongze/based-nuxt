@@ -23,3 +23,7 @@ TODO：
 
 1. info page
 2. how to get the increase or decrease data
+
+https://based-nuxt.vercel.app/
+1.fix music play logic (play when first click page anywhere)
+2.change image fit style(cover to contain, will not cropper image)

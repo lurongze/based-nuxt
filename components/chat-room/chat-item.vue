@@ -6,6 +6,7 @@ import avatar3Png from "~/assets/avatar/avatar3.png";
 import avatar4Png from "~/assets/avatar/avatar4.png";
 import cornerButton from "~/components/corner-button.vue";
 import { isImageUrl } from "~/utils";
+import { getMessageTagText } from "~/utils/data";
 
 const props = defineProps({
   item:{
@@ -24,24 +25,28 @@ const isSelf = computed(()=>{
   if(!props.accountKey){
     return false;
   }else{
-    return props.item.user_id === props.accountKey
+    return nameAvatar.value.k && nameAvatar.value.k === props.accountKey
   }
 })
 
 const nameAvatar = computed(()=>{
   try {
-    const obj = JSON.parse(props.item.name);
+    const obj = JSON.parse(props.item.user_id);
     return obj;
   } catch (error) {
     return {
-      n: props.item.name||'foo',
+      n: props.item.role ||'foo',
       a:1
     }
   }
 })
 
+const message = computed(()=>{
+  return getMessageTagText(props.item.message)
+})
+
 const isImgMsg = computed(()=>{
-  return isImageUrl(props.item.message)
+  return isImageUrl(message.value)
 })
 </script>
 
@@ -67,14 +72,14 @@ const isImgMsg = computed(()=>{
       </div>
       <corner-button>
         <div v-if="isImgMsg" class="w-full h-auto box-border px-5 py-2">
-          <img :src="item.message" class="w-full h-auto" />
+          <img :src="message" class="w-full h-auto" />
         </div>
         <div
           v-else
           class="w-fit max-w-[385px] box-border px-5 py-2 text-lg text-white text-wrap break-words word-break-all"
           :class="item.error ? 'text-red-700' : ''"
         >
-          {{ item.message }}
+          {{ message }}
         </div>
       </corner-button>
     </div>

@@ -56,3 +56,11 @@ export function mockUpdateUserInfo(accountKey, userInfo) {
     }, 500);
   });
 }
+
+export function getMessageTagText(msg) {
+  const arr = msg.split("<message>");
+  if (arr[1]) {
+    return arr[1].replace("</message>", "");
+  }
+  return msg;
+}
