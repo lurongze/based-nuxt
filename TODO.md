@@ -27,3 +27,9 @@ TODO：
 https://based-nuxt.vercel.app/
 1.fix music play logic (play when first click page anywhere)
 2.change image fit style(cover to contain, will not cropper image)
+
+https://based-nuxt.vercel.app/
+
+1. 'pop up' and 'shopkeeper' font change
+2. chat room data adjust
+3. chart and other link set

@@ -40,7 +40,11 @@ function getHistoryInterval(){
       getHistoryInterval()
     },interTime)
   }).then((res)=>{
-    const list = (res?.data?.messages||[]).map(s=>{
+    const list = (res?.data?.messages||[]).sort((a,b)=>{
+      const timeSort = new Date(a.timestamp).getTime() -new Date(b.timestamp).getTime();
+      console.log("timeSort",timeSort)
+      return timeSort >=0 ? 0: -1;
+    }).map(s=>{
       const item = {
         ...s,
         id: `${s.message_id}-${s.role}`,
