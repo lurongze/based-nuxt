@@ -103,30 +103,37 @@ onMounted(() => {
         <div
           class="flex gap-5 items-center h-[44px] text-white whitespace-nowrap"
         >
-          <!-- <div
-            class="h-full border-r-[1px] border-r-[#ccc] leading-[44px] px-2"
-          >
-            $AI
-          </div> -->
           <div class="flex items-center whitespace-nowrap h-full mx-5 gap-1">
             <NuxtLink
               href="https://dexscreener.com/blast/0xD4196Fe40eB76bE197E1F3cCc8a118f32C56f66c"
               target="_blank"
               class="text-lg text-[#ccc] cursor-pointer"
             >
-              ${{ princeUsd }}
+              CHART ${{ princeUsd }}
             </NuxtLink>
+          </div>
+        </div>
+      </corner-button>
+
+      <corner-button>
+        <div
+          class="flex gap-5 items-center h-[44px] text-white whitespace-nowrap"
+        >
+          <div class="flex items-center whitespace-nowrap h-full mx-5 gap-1">
             <NuxtLink
               href="https://app.baseline.markets/trade/Blast/0x367473E150487e5cDC14D331550ed909b7B2192D"
               target="_blank"
-              class="flex gap-1"
+              class="flex items-center gap-1"
             >
               <img
                 :src="priceChange >= 0 ? upCaseSvg : downCaseSvg"
                 alt="up-corner"
                 class="w-[24px] h-[24px]"
               />
-              <div class="text-[#01E527] cursor-pointer">
+              <div
+                class="cursor-pointer"
+                :class="priceChange >= 0 ? 'text-[#01E527]' : 'text-[red]'"
+              >
                 {{ priceChange }}% BUY
               </div>
             </NuxtLink>

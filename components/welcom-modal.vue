@@ -56,7 +56,7 @@ function handleClose() {
               <span class="text-[#ccc] text-3xl leading-tight">
                 BASED @newcellmate <br />
                 is the flagship Al-agent <br />
-                for the MindPalace ecosystem.
+                for the MINDPALACE ecosystem.
 
                 <br />
                 <br />
