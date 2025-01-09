@@ -5,8 +5,9 @@
 @font-face {
   font-family: "plusJakartaSans";
   /* public/Plus_Jakarta_Sans/PlusJakartaSans-VariableFont_wght.ttf */
-  src: url("/public/Plus_Jakarta_Sans/plusJakartaSans-VariableFont_wght.ttf")
-    format("truetype");
+  /* src: url("/public/Plus_Jakarta_Sans/plusJakartaSans-VariableFont_wght.ttf")
+    format("truetype"); */
+  src: url("/public/fonts/ABeeZee-Regular.ttf") format("truetype");
 
   font-weight: normal;
   font-style: normal;

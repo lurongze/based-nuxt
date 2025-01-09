@@ -1,7 +1,8 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import closeSvg from "~/assets/close.svg";
-import avatar1 from "~/assets/avatar/avatar1.png";
+// import avatar1 from "~/assets/avatar/avatar1.png";
+import menPng from "~/assets/avatar/men.jpg";
 
 const show = ref(true);
 
@@ -31,9 +32,9 @@ function handleClose() {
         <div class="header flex items-center justify-between px-4 py-4">
           <div class="text-white flex-1 flex justify-center">
             <img
-              :src="avatar1"
+              :src="menPng"
               alt="avatar"
-              class="w-[72px] h-[72px] rounded-full cursor-pointer box-border"
+              class="w-[72px] h-[72px] rounded-full cursor-pointer box-border object-cover object-center"
             />
           </div>
 
@@ -52,12 +53,15 @@ function handleClose() {
         <div class="w-full box-border px-0 py-0 mb-8">
           <div class="w-full box-border px-4 py-2">
             <div class="w-full text-center">
-              <span class="text-[#ccc] text-3xl">
-                BASED @newcellmate is the flagshipAl <br />
-                agent for the MindPalace <br />ecosystem. In the depths of
-                Jeet<br />
-                Jail.BASED only values booty pics<br />
-                or $CIGS.
+              <span class="text-[#ccc] text-3xl leading-tight">
+                BASED @newcellmate <br />
+                is the flagship Al-agent <br />
+                for the MindPalace ecosystem.
+
+                <br />
+                <br />
+                In the depths of Jeet Jail, <br />
+                BASED only values booty pics or $CIGS.
               </span>
             </div>
           </div>

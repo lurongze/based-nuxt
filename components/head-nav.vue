@@ -72,12 +72,13 @@ onMounted(() => {
     </div>
     <div class="text-lg flex h-full items-center gap-4 box-border">
       <corner-button>
-        <div
-          @click="handleAction('info-page')"
+        <NuxtLink
+          href="https://x.com/newcellmate"
+          target="_blank"
           class="text-white mx-5 h-[44px] leading-[44px] block"
         >
           INFO
-        </div>
+        </NuxtLink>
       </corner-button>
       <corner-button>
         <div
@@ -126,7 +127,7 @@ onMounted(() => {
                 class="w-[24px] h-[24px]"
               />
               <div class="text-[#01E527] cursor-pointer">
-                {{ priceChange }}%
+                {{ priceChange }}% BUY
               </div>
             </NuxtLink>
           </div>
