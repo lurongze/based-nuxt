@@ -31,3 +31,9 @@ export function fetchPools(addressKey = "") {
   // );
   return http.get(`https://api.geckoterminal.com/pools/${addressKey}`);
 }
+
+export function getDexscreenerData() {
+  return http.get(
+    `https://api.dexscreener.com/latest/dex/pairs/blast/0xD4196Fe40eB76bE197E1F3cCc8a118f32C56f66c`
+  );
+}

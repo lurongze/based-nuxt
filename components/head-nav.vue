@@ -9,7 +9,7 @@ import audioPlayer from "~/components/audio-player.vue";
 import titlePng from "~/assets/title.png";
 import cornerButton from "~/components/corner-button.vue";
 import { useLoginStore } from "~/stores";
-import { fetchEth, fetchPools } from "~/api";
+import { getDexscreenerData } from "~/api";
 
 const loginStore = useLoginStore();
 
@@ -22,18 +22,14 @@ const isLogin = computed(() => {
   return Boolean(loginStore.loginUser.accountKey);
 });
 
-const ethPrice = ref(0);
-const poolsNum = ref(0);
+const princeUsd = ref(0);
+const priceChange = ref(0);
 
-function getEthPrice() {
-  fetchEth().then((res) => {
-    console.log("res price", res);
-    ethPrice.value = res?.data?.ethereum?.usd || 0;
-  });
-}
-function getPoolsData() {
-  fetchPools("0x66781cb9086f63513933cf09d98d22ddf8285e83").then((res) => {
-    poolsNum.value = 100;
+function getDexscreenerDataFunc() {
+  getDexscreenerData().then((res) => {
+    console.log("res", res);
+    princeUsd.value = Number(res?.data?.pair?.priceUsd || 0);
+    priceChange.value = Number(res?.data?.pair?.priceChange?.h24 || 0);
   });
 }
 
@@ -47,8 +43,7 @@ function handleAction(action = "shop-keeper") {
   emit("clickAction", action);
 }
 onMounted(() => {
-  getEthPrice();
-  getPoolsData();
+  getDexscreenerDataFunc();
 });
 </script>
 
@@ -118,7 +113,7 @@ onMounted(() => {
               target="_blank"
               class="text-lg text-[#ccc] cursor-pointer"
             >
-              ${{ ethPrice }}
+              ${{ princeUsd }}
             </NuxtLink>
             <NuxtLink
               href="https://app.baseline.markets/trade/Blast/0x367473E150487e5cDC14D331550ed909b7B2192D"
@@ -126,11 +121,13 @@ onMounted(() => {
               class="flex gap-1"
             >
               <img
-                :src="poolsNum >= 0 ? upCaseSvg : downCaseSvg"
+                :src="priceChange >= 0 ? upCaseSvg : downCaseSvg"
                 alt="up-corner"
                 class="w-[24px] h-[24px]"
               />
-              <div class="text-[#01E527] cursor-pointer">{{ poolsNum }}%</div>
+              <div class="text-[#01E527] cursor-pointer">
+                {{ priceChange }}%
+              </div>
             </NuxtLink>
           </div>
         </div>
